@@ -6,8 +6,7 @@ Panels:
       Expanded:
         - /Global Options1
         - /Status1
-        - /RobotModel1
-        - /TF1
+        - /LaserScan1
       Splitter Ratio: 0.5
     Tree Height: 579
   - Class: rviz/Selection
@@ -63,17 +62,16 @@ Visualization Manager:
         Expand Link Details: false
         Expand Tree: false
         Link Tree Style: Links in Alphabetic Order
+        axesFront:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        axesRear:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
         base_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        connection_part_1:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        connection_part_2:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -98,6 +96,16 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
         front_wagon:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        jointFront:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        jointRear:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -127,11 +135,6 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
         rear_wagon:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        rear_wagon_ghost:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -153,10 +156,6 @@ Visualization Manager:
           Value: true
         base_link:
           Value: true
-        connection_part_1:
-          Value: true
-        connection_part_2:
-          Value: true
         frontLeft:
           Value: true
         frontRight:
@@ -173,8 +172,6 @@ Visualization Manager:
           Value: true
         laser_front_box:
           Value: true
-        odom:
-          Value: true
         rearLeft:
           Value: true
         rearRight:
@@ -185,8 +182,6 @@ Visualization Manager:
           Value: true
         rear_wagon:
           Value: true
-        rear_wagon_ghost:
-          Value: true
       Marker Alpha: 1
       Marker Scale: 0.5
       Name: TF
@@ -194,24 +189,8 @@ Visualization Manager:
       Show Axes: true
       Show Names: true
       Tree:
-        odom:
-          base_link:
-            axesFront:
-              jointFront:
-                jointRear:
-                  axesRear:
-                    {}
-            connection_part_1:
-              connection_part_2:
-                rear_wagon_ghost:
-                  rearLeft:
-                    {}
-                  rearRight:
-                    {}
-                  rear_wagon:
-                    rear_laser_mount_link:
-                      rear_laser:
-                        {}
+        base_link:
+          axesFront:
             frontLeft:
               {}
             frontRight:
@@ -219,10 +198,22 @@ Visualization Manager:
             front_laser_mount_link:
               front_laser:
                 {}
-            front_wagon:
-              {}
+            jointFront:
+              jointRear:
+                axesRear:
+                  rearLeft:
+                    {}
+                  rearRight:
+                    {}
+                  rear_laser_mount_link:
+                    rear_laser:
+                      {}
+                  rear_wagon:
+                    {}
             laser_front_box:
               {}
+          front_wagon:
+            {}
       Update Interval: 0
       Value: true
     - Alpha: 1
@@ -235,7 +226,7 @@ Visualization Manager:
       Channel Name: intensity
       Class: rviz/LaserScan
       Color: 255; 255; 255
-      Color Transformer: Intensity
+      Color Transformer: FlatColor
       Decay Time: 0
       Enabled: true
       Invert Rainbow: false
@@ -246,7 +237,7 @@ Visualization Manager:
       Queue Size: 10
       Selectable: true
       Size (Pixels): 3
-      Size (m): 0.009999999776482582
+      Size (m): 0.019999999552965164
       Style: Flat Squares
       Topic: /laser_scanner_front
       Unreliable: false
@@ -281,7 +272,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 5.159239768981934
+      Distance: 4.693294525146484
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -289,17 +280,17 @@ Visualization Manager:
         Value: false
       Field of View: 0.7853981852531433
       Focal Point:
-        X: -2.384185791015625e-07
-        Y: -2.384185791015625e-07
-        Z: 0
+        X: 0.627051830291748
+        Y: 0.661095380783081
+        Z: -0.8763968348503113
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.6103975176811218
+      Pitch: 0.9747968316078186
       Target Frame: <Fixed Frame>
-      Yaw: 3.3117480278015137
+      Yaw: 3.5967557430267334
     Saved: ~
 Window Geometry:
   Displays:
@@ -317,5 +308,5 @@ Window Geometry:
   Views:
     collapsed: false
   Width: 1216
-  X: 405
-  Y: 128
+  X: 393
+  Y: 44
