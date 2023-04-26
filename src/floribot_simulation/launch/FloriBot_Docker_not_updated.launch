@@ -1,0 +1,36 @@
+<?xml version='1.0'?>
+<launch>
+
+  <!-- Include Laserscanners -->
+  <!-- <include file="$(find sick_scan)/launch/sick_tim_5xx.launch"></include> -->
+  <!-- Include RealSense Cameras -->
+  <!-- <include file="$(find realsense2_camera)/launch/rs_camera.launch"></include> -->
+  <!-- Include Base Node -->
+  <include file="$(find base)/launch/base_node.launch"></include>
+  <!-- Include Wheel Speed Publisher from Ros to Gazebo -->
+  <include file="$(find base2gazebo)/launch/base2gazebo.launch"></include>
+  
+  <param name="robot_description" command="$(find xacro)/xacro $(find floribot_simulation)/urdf/Floribot_final.urdf.xacro" />
+
+  <node pkg="robot_state_publisher" type="robot_state_publisher"  name="robot_state_publisher">
+    <param name="publish_frequency" type="double" value="30.0" />
+  </node>
+
+  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
+
+  <!-- Init Controllers-->
+  <rosparam file="$(find floribot_simulation)/config/joints.yaml" command="load"/> 
+  <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" ns="floribot"
+    args="joint_state_controller
+          joint_fl_controller
+          joint_fr_controller
+          joint_rl_controller
+          joint_rr_controller
+            "/>
+
+      <!-- Include Robot Spawner ##### Muss hinter Controller Spawner stehen ########-->
+  <include file="$(find virtual_maize_field)/launch/robot_spawner.launch">
+    <arg name="robot_name" value="floribot"/>
+    <arg name="initial_joint_pose" value="-J body_angle -1.57" />
+  </include>
+</launch>

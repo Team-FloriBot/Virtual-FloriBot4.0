@@ -1,0 +1,52 @@
+<?xml version='1.0'?>
+<launch>
+
+<!--Parameters for Kinematics -->
+    <arg name="frontLength"         default="-0.38"/>
+    <arg name="rearLength"          default="-0.38"/>
+    <arg name="wheelDiameter"       default="0.280"/>
+    <arg name="axesLength"          default="0.335"/>
+
+
+    <node name="base" pkg="base" type="base_node">
+        <param name="wheelDiameter"     value="$(arg wheelDiameter)"/>
+        <param name="axesLength"        value="$(arg axesLength)"/>
+
+        <!--remap from="/engine/actualSpeed"            to="/Engine/ActualSpeed"/-->
+        <!--remap from="/engine/targetTorque"           to=""/-->
+        <!--remap from="/engine/targetSpeed"            to="/Engine/TargetSpeed"/-->
+        <!--remap from="/engine/targetAcceleration"     to=""/-->
+    </node>
+
+   
+    <!--args="tx ty tz rx ry rz rw" Translation kartesisch Rotation quaternion-->
+    <node pkg="tf2_ros" type="static_transform_publisher" name="AxesFront2JointFront"   args="$(arg frontLength) 0 0 0 0 0 1 axesFront jointFront" />
+    <node pkg="tf2_ros" type="static_transform_publisher" name="AxesRear2JointRear"     args="$(arg rearLength) 0 0 0 0 0 1  jointRear axesRear" />
+    <node pkg="tf2_ros" type="static_transform_publisher" name="Front"                  args="0 0 0 0 0 0 1 base_link axesFront" />
+    
+    <!-- pkg= Package of Node -->
+    <!-- type= Node type. There must be a corresponding executable with the same name. -->
+    <!-- name= Node name -->
+    <!-- Pakete "base" dort, "angle2tf".cpp starten mit dem Node Namen "Angle2tf" -->
+    <node pkg="base" type="angle2tf" name="Angle2tf" />
+        <remap from="/floribot/joint_states" to="/joint_states"/>
+        
+    <!--include file="$(find sick_scan)/launch/own_scanner.launch">
+        <arg name="ParentFrame" value="AxesFront" />
+        <arg name="PositionID"  value="Front" />
+        <arg name="TX"          value="0" />
+        <arg name="TY"          value="0" />
+        <arg name="TZ"          value="-0.1" />
+        <arg name="IPAddress"   value="192.168.0.51" />
+    </include>
+
+    <include file="$(find sick_scan)/launch/own_scanner.launch">
+        <arg name="ParentFrame" value="AxesRear" />
+        <arg name="PositionID"  value="Rear" />
+        <arg name="TX"          value="0" />
+        <arg name="TY"          value="0" />
+        <arg name="TZ"          value="-0.1" />
+        <arg name="IPAddress"   value="192.168.0.52" />
+    </include-->
+
+</launch>

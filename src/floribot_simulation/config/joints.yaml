@@ -1,0 +1,44 @@
+# The joint state controller handles publishing transforms for any moving joints
+gazebo:
+   joint_state_controller:
+      type: "joint_state_controller/JointStateController"
+      publish_rate: 50
+
+   joint_fl_controller:
+      type: velocity_controllers/JointVelocityController
+      joint: joint_frontLeft
+      pid: {p: 5.0, i: 0, d: 0}
+   
+   joint_fr_controller:
+      type: velocity_controllers/JointVelocityController
+      joint: joint_frontRight
+      pid: {p: 5.0, i: 0, d: 0}
+   
+   joint_rl_controller:
+      type: velocity_controllers/JointVelocityController
+      joint: joint_rearLeft
+      pid: {p: 5.0, i: 0, d: 0}
+   
+   joint_rr_controller:
+      type: velocity_controllers/JointVelocityController
+      joint: joint_rearRight
+      pid: {p: 5.0, i: 0, d: 0}
+
+   body_angle_controller:
+      type: velocity_controllers/JointVelocityController
+      joint: body_angle
+      pid: {p: 5.0, i: 0, d: 0}
+
+   swing_angle_controller:
+      type: velocity_controllers/JointVelocityController
+      joint: j_revolute_front_rear
+      pid: {p: 5.0, i: 0, d: 0}
+   
+gazebo_ros_control:
+   pid_gains:
+      joint_frontLeft: {p: 5.0, i: 0, d: 0}
+      joint_frontRight: {p: 5.0, i: 0, d: 0}
+      joint_rearLeft: {p: 5.0, i: 0, d: 0}
+      joint_rearRight: {p: 5.0, i: 0, d: 0}
+      body_angle: {p: 5.0, i: 0, d: 0}
+      j_revolute_front_rear: {p: 5.0, i: 0, d: 0}
