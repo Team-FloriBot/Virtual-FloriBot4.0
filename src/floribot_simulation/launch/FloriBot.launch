@@ -44,7 +44,7 @@
     <param name="publish_frequency" type="double" value="30.0" />
   </node>
 
-  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
+  <!--node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" /-->
 
   <!-- Init Controllers-->
   <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" args="gazebo/joint_state_controller gazebo/joint_fl_controller gazebo/joint_fr_controller gazebo/joint_rl_controller gazebo/joint_rr_controller gazebo/body_angle_controller" />

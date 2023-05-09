@@ -28,7 +28,7 @@
     <!-- type= Node type. There must be a corresponding executable with the same name. -->
     <!-- name= Node name -->
     <!-- Pakete "base" dort, "angle2tf".cpp starten mit dem Node Namen "Angle2tf" -->
-    <node pkg="base" type="angle2tf" name="Angle2tf" />
+    <!--node pkg="base" type="angle2tf" name="Angle2tf" /-->
         <remap from="/floribot/joint_states" to="/joint_states"/>
         
     <!--include file="$(find sick_scan)/launch/own_scanner.launch">
