@@ -34,7 +34,8 @@
   <!-- Include Path Planner -->
   <!--include file="$(find maize_navigation)/launch/maize_navigation.launch"></include-->
   <rosparam file="$(find floribot_simulation)/config/joints.yaml" command="load"/> 
-  
+  <!--load PARAMETER-->
+  <rosparam file="$(find floribot_simulation)/launch/floribot_parameter.yaml"/>
   <param name="robot_description" command="$(find xacro)/xacro $(arg model)" />
 
   <!-- Open Simulation in rviz -->

@@ -1,0 +1,7 @@
+<?xml version='1.0'?>
+<launch>
+   <master auto="start"/>
+ <!-- Run node to send goals -->
+   <node pkg="visu" type="rviz_visu.py" name="rviz_visu" output="screen">
+   </node>
+</launch>

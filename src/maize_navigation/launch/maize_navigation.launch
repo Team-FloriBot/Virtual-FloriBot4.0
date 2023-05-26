@@ -1,0 +1,7 @@
+<?xml version='1.0'?>
+<launch>
+   <master auto="start"/>
+ <!-- Run node to send goals -->
+   <node pkg="maize_navigation" type="maize_navigation.py" name="maize_navigation" output="screen">
+   </node>
+</launch>

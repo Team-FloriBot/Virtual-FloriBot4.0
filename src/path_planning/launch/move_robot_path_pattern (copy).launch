@@ -1,0 +1,17 @@
+<launch>
+   <master auto="start"/>
+ <!-- Run node to send goals -->
+   <node pkg="path_planning" type="path_planning.py" name="path_planning" output="screen" >
+    <param name="path_pattern" value="S 1L 1R 1L 1R 1L 1R 1L 1R 1L 1R 1L 1R 1L 1R F" />
+    <!--param name="path_pattern" textfile="/catkin/src/Virtual_Field_Robot_Event/virtual_maize_field/map" /-->
+    <param name="p_gain_offset_headland" value="1" />
+    <param name="p_gain_orient_headland" value="1" />
+    <param name="max_lin_vel_in_row" value="0.4" /> <!--0.6-->
+    <param name="max_lin_vel_in_headland" value="0.25" /> <!--0.25-->
+    <param name="max_ang_vel_robot" value="0.2" /> <!--0.90-->
+    <param name="lin_vel_turn" value="0.314159" /> <!-- durch linear geschwindigkeit ersetzen - erledigt -->
+    <param name= "laser_scanner_coord_gazebo" value="-1" /> <!-- y coord from robot and laserscanner showing in diffrent directions -> -1, else it should be a 1-->     
+    <param name="real_sim_parameter" value="1" /> <!-- 0 -> real Robot, 1-> Simulation -->
+   </node>
+</launch>
+

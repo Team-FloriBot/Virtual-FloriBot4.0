@@ -1,0 +1,14 @@
+<?xml version='1.0'?>
+<launch>
+   <master auto="start"/>
+  <node pkg="scan_tools" type="scan2cart.py" name="scan2cart_front">
+    <param name="scan_topic" value="/laser_scanner_front"/>
+    <param name="pointcloud_topic" value="/laser_scanner_front_cart"/>
+  </node>
+
+  <node pkg="scan_tools" type="scan2cart.py" name="scan2cart_rear">
+    <param name="scan_topic" value="/laser_scanner_rear"/>
+    <param name="pointcloud_topic" value="/laser_scanner_rear_cart"/>
+  </node>
+</launch>
+

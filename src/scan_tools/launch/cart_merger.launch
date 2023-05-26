@@ -1,0 +1,8 @@
+<?xml version='1.0'?>
+<launch>
+   <master auto="start"/>
+  <node pkg="scan_tools" type="cart_merger.py" name="cart_merger">
+    <!--if wanted change tf frame of the point cloud-->
+    <!--param name="merge_frame" value="base_link"/-->
+  </node>
+</launch>

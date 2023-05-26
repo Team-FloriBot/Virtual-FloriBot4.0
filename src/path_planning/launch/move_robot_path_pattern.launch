@@ -1,0 +1,7 @@
+<launch>
+   <master auto="start"/>
+ <!-- Run node to send goals -->
+   <node pkg="maize_navigation" type="path_planning.py" name="path_planning" output="screen">
+   </node>
+</launch>
+
