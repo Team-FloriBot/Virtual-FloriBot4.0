@@ -22,7 +22,7 @@
 
 <!-- laser parameter -->
 <xacro:property name="x_laser_front" value="0.3315" />
-<xacro:property name="x_laser_back" value="-0.33" />
+<xacro:property name="x_laser_back" value="-0.3315" />
 <xacro:property name="laser_height" value="0.03" />
 
 <!-- camera parameter -->
@@ -359,11 +359,11 @@
     <material>Gazebo/Grey</material>
 </gazebo>
 
-<!-- joint rear laserscanner -->
+<!-- joint rear laserscanner x_laser_back-->
 <joint name="j_rear_laser" type="fixed">
   <parent link="axesRear"/>
   <child link="rear_laser_mount_link"/>
-  <origin xyz="${x_laser_back +axesRear_2_rear_wagon} 0 ${laser_height}" rpy="3.14 0 3.14"/>
+  <origin xyz="${x_laser_back} 0 ${laser_height}" rpy="3.14 0 3.14"/>
 </joint>
 
 <!-- rear laserscanner -->
