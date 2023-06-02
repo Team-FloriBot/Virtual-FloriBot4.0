@@ -2,9 +2,10 @@
 
 import rospy
 import numpy as np
-from sensor_msgs.msg import PointCloud2, PointField
+from sensor_msgs.msg import PointCloud2, PointField,Joy
 from sensor_msgs import point_cloud2
 from geometry_msgs.msg import Twist, Point32
+from std_msgs.msg import Bool
 
 
 class FieldRobotNavigator:
@@ -13,6 +14,10 @@ class FieldRobotNavigator:
 
         # Set up subscribers and publishers
         rospy.Subscriber('/merged_point_cloud', PointCloud2, self.point_cloud_callback)
+        rospy.Subscriber('/merged_point_cloud', PointCloud2, self.point_cloud_callback)
+        rospy.Subscriber('/merged_point_cloud', PointCloud2, self.point_cloud_callback)
+        rospy.Subscriber('/automatic_mode', Bool, self.navigate)
+        rospy.Subscriber('/movement_sequence', Joy, self.pattern_callback)
         self.cmd_vel_pub = rospy.Publisher('/cmd_vel', Twist, queue_size=1)
         self.points_pub = rospy.Publisher('/field_points', PointCloud2, queue_size=1)
 
@@ -69,7 +74,7 @@ class FieldRobotNavigator:
 
         # Publish self.points
         header = msg.header
-        header.frame_id = "front_laser"
+        header.frame_id = "laserFront"
         fields = [PointField('x', 0, PointField.FLOAT32, 1),
                   PointField('y', 4, PointField.FLOAT32, 1),
                   PointField('z', 8, PointField.FLOAT32, 1)]
@@ -85,17 +90,37 @@ class FieldRobotNavigator:
             if self.points is None:
                 rate.sleep()
                 continue
-            
-            if self.current_state == 'drive_in_row':
-                self.drive_in_row()
-            elif self.current_state == 'turn_and_exit':
-                self.turn_and_exit()
-            elif self.current_state == 'counting_rows':
-                self.counting_rows()
-            elif self.current_state == 'turn_to_row':
-                self.turn_to_row()
+            if self.automatic_mode==False:
+                rospy.spin()
+            else:
+                if self.current_state == 'drive_in_row':
+                    self.drive_in_row()
+                elif self.current_state == 'turn_and_exit':
+                    self.turn_and_exit()
+                elif self.current_state == 'counting_rows':
+                    self.counting_rows()
+                elif self.current_state == 'turn_to_row':
+                    self.turn_to_row()
+                    
 
-            rate.sleep()
+                rate.sleep()
+
+    def pattern_callback(self,msg):
+    # Callback function to process the received message
+        buttons = msg.buttons
+        pattern = []
+
+        # Iterate over the buttons list with a step size of 2
+        for i in range(0, len(buttons), 2):
+            button_count = buttons[i]
+            button_value = buttons[i+1]
+            if button_value==1:
+                button_value='L'
+            else:
+                button_value='R'    
+            pattern.append([button_count, button_value])
+            self.pattern = pattern
+
 
     def drive_in_row(self):
         rospy.loginfo("Driving in row...")

@@ -15,14 +15,14 @@ def publish_bounding_boxes():
     idx=0
     while idx<=2:
         marker_left_msg = Marker()
-        marker_left_msg.header.frame_id = "front_laser"
+        marker_left_msg.header.frame_id = "laserFront"
         marker_left_msg.ns = "bounding_boxes"
         marker_left_msg.id = 0  # ID of the left marker
         marker_left_msg.action = Marker.DELETE  # Set the action to DELETE
         marker_left_msg.lifetime = rospy.Duration(0)  # Set a short lifetime (0 seconds)
 
         marker_right_msg = Marker()
-        marker_right_msg.header.frame_id = "front_laser"
+        marker_right_msg.header.frame_id = "laserFront"
         marker_right_msg.ns = "bounding_boxes"
         marker_right_msg.id = 1  # ID of the right marker
         marker_right_msg.action = Marker.DELETE  # Set the action to DELETE
@@ -73,7 +73,7 @@ def publish_bounding_boxes():
             center_y = (y_min + y_max) / 2.0
 
             marker_left_msg = Marker()
-            marker_left_msg.header.frame_id = "front_laser"
+            marker_left_msg.header.frame_id = "laserFront"
             marker_left_msg.type = Marker.CUBE
             marker_left_msg.action = Marker.ADD
             marker_left_msg.id = 0
@@ -93,7 +93,7 @@ def publish_bounding_boxes():
             marker_left_msg.color.b = 0.0
 
             marker_right_msg = Marker()
-            marker_right_msg.header.frame_id = "front_laser"
+            marker_right_msg.header.frame_id = "laserFront"
             marker_right_msg.type = Marker.CUBE
             marker_right_msg.action = Marker.ADD
             marker_right_msg.id = 1

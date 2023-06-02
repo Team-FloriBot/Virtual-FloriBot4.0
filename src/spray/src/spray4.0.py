@@ -69,7 +69,7 @@ class FieldRobotNavigator:
 
         # Publish self.points
         header = msg.header
-        header.frame_id = "front_laser"
+        header.frame_id = "laserFront"
         fields = [PointField('x', 0, PointField.FLOAT32, 1),
                   PointField('y', 4, PointField.FLOAT32, 1),
                   PointField('z', 8, PointField.FLOAT32, 1)]
@@ -85,7 +85,6 @@ class FieldRobotNavigator:
             if self.points is None:
                 rate.sleep()
                 continue
-            
             if self.current_state == 'drive_in_row':
                 self.drive_in_row()
             elif self.current_state == 'turn_and_exit':

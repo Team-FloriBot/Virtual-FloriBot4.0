@@ -2,7 +2,7 @@
 <launch>
    <master auto="start"/>
  <!-- Run node to send goals -->
-   <node pkg="visu" type="rviz_visu.py" name="rviz_visu" output="screen">
+   <node pkg="visu" type="rviz_visu4.0.py" name="rviz_visu" output="screen">
    <param name="box" value="drive"/>
    <!-- drive, exit , count -->
    </node>
