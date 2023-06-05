@@ -55,7 +55,7 @@ catkin_make
 ```
 source ~/catkin_ws/devel/setup.bash
 ```    
-Sollte es aufgrund von fehlenden Abhänigkeiten zu Fehlen kommen, können diese mit rosdep in der Regel behoben werden:
+Sollte es aufgrund von fehlenden Abhänigkeiten zu Fehlern kommen, können diese mit rosdep in der Regel behoben werden:
 ```
 cd ~/catkin_ws 
 ```
