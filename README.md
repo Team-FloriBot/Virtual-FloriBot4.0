@@ -1,71 +1,69 @@
 # Virtual-FloriBot4.0
-In diesem Git liegen die Dateien für die Floribot Simulation ab.
-Um das Repository zu klonen folgenden Befehl benutzen:
+In diesem Git-Repository liegen die Dateien für die Simulation von FloriBot 4.0 in einem viertuellen Maisfeld.
 
-    git clone https://github.com/Team-FloriBot/Virtual-FloriBot4.0.git catkin_ws
+Das Repository lässt sich mit den nachfolgenden Befehlen inklusive Submodulen klonen:
 
-Existiert der Ordner bereits, muss er zuerst gelöscht werden. Optional könnte man auch das <catkin_ws> durch einen anderen Zielordnernamen ersetzen.
-
-Um die Daten im Submodul virtual_maize_field herunterzuladen muss man sich im catkin_ws Ordner befinden und der Befehl
+    git clone https://github.com/Team-FloriBot/Virtual-FloriBot4.0.git ~/catkin_ws
+    
+    cd ~/catkin_ws
 
     git submodule init
-    
-ausgeführt werden und anschließend
 
     git submodule update
     
-Es werden dann alle Daten des Submoduls heruntergeladen. 
+
 
 # Benötigte Software
-ROS Noetic: 
-    http://wiki.ros.org/noetic/Installation/Ubuntu
+**ROS Noetic:**
 
-ROS Velocity Controllers: 
+http://wiki.ros.org/noetic/Installation/Ubuntu
+
+**ROS Velocity Controllers:**
 
     sudo apt install ros-noetic-velocity-controllers
     
-ROS Ddynamic Reconfigure:
+**ROS Ddynamic Reconfigure:**
 
     sudo apt install ros-noetic-ddynamic-reconfigure
     
-Gazebo 11: 
+**Gazebo 11:** 
 
     curl -sSL http://get.gazebosim.org | sh
     
-Python: 
+**Python:** 
 
     sudo apt install python-is-python3
     
-XACRO:
+**XACRO:**
 
     sudo apt install ros-noetic-xacro
 
-Realsense Dependencies:
-    https://github.com/IntelRealSense/librealsense/blob/master/doc/distribution_linux.md
+**Realsense Dependencies:**
+
+https://github.com/IntelRealSense/librealsense/blob/master/doc/distribution_linux.md
+
+# Bauen des Workspaces
+
+    cd ~/catkin_ws 
+    
+    catkin_make
+    
+    source ~/catkin_ws/devel/setup.bash
+    
+Sollte es aufgrund von fehlenden Abhänigkeiten zu Fehlen kommen, können diese mit rosdep in der Regel behoben werden:
+
+    cd ~/catkin_ws 
+
+    rosdep install --from-paths src --ignore-src -r -y
 
 # Starten der Simulation
-In dieser Anleitung wird davon ausgegangen, dass der Catkin Workspace im Ordner catkin_ws abliegt. <br>
-Ein neues Terminal öffnen und folgenden Befehl eingeben:
 
-    cd ~/catkin_ws && catkin_make && source ~/.bashrc 
-
-Nachdem der Befehl eingegeben wurde, wirde der Catkin Workspace über catkin_make erstellt und es erscheinen im Ordner catkin_ws zwei neue Unterordner: "build" und "devel". <br>
-Bevor nun die Simulation gestartet werden kann, müssen noch zuerst weitere Abhängigkeiten für das Maize Field installiert werden und eine Welt generiert werden. Die Abhängigkeiten werden mit:
-
-    rosdep install virtual_maize_fiel
-
-Die Welt erstellt man dann beispielsweise mit:
+Zuerst muss eine Welt erstellt werden:
 
     rosrun virtual_maize_field generate_world.py fre22_task_navigation_mini
 
-Mehr Vorschläge für die Generierung von Welten findet ihr unter: https://github.com/FieldRobotEvent/virtual_maize_field#sample-worlds
+Mehr Vorschläge für die Generierung von Welten findet man unter: https://github.com/FieldRobotEvent/virtual_maize_field#sample-worlds
 
-Anschließend kann die Simulation mit dem folgendem Befehel gestartet werdeb:
+Anschließend kann die Simulation gestartet werden:
 
     roslaunch floribot_simulation FloriBot.launch 
-
-Sobald die Simulation läuft, kann mit dem Roboter mit folgendem Befehl eine Geschwindigkeit vorgegeben werden, dazu muss jedoch ein neues Terminal geöffnet werden: 
-
-    rostopic pub /cmd_vel geometry_msgs/Twist -r 10 -- '[0.2, 0.0, 0.0]' '[0.0, 0.0, 0.0]' 
-    
-Die Simulation kann mit der Tastenkombination Strg+C beendet werden. 
