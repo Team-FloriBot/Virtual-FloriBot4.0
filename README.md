@@ -19,6 +19,7 @@ git submodule update
 # Benötigte Software
 **ROS Noetic:**
 
+Bitte der Installationsanleitung folgen: 
 http://wiki.ros.org/noetic/Installation/Ubuntu
 
 **ROS Velocity Controllers:**
@@ -41,9 +42,12 @@ sudo apt install python-is-python3
 ```
 sudo apt install ros-noetic-xacro
 ```
-**Realsense Dependencies:**
+**Realsense:**
 
+Bitte der Installationsanleitung folgen: 
 https://github.com/IntelRealSense/librealsense/blob/master/doc/distribution_linux.md
+
+Hiebei müssen die Pakete `librealsense2-dkms`, `librealsense2-utils` und `librealsense2-dev` installiert werden.
 
 # Bauen des Workspaces
 ```
@@ -55,13 +59,6 @@ catkin_make
 ```
 source ~/catkin_ws/devel/setup.bash
 ```    
-Sollte es aufgrund von fehlenden Abhänigkeiten zu Fehlern kommen, können diese mit rosdep in der Regel behoben werden:
-```
-cd ~/catkin_ws 
-```
-```
-rosdep install --from-paths src --ignore-src -r -y
-```
 # Starten der Simulation
 
 Zuerst muss eine Welt erstellt werden:
@@ -73,4 +70,12 @@ Mehr Vorschläge für die Generierung von Welten findet man unter: https://githu
 Anschließend kann die Simulation gestartet werden:
 ```
 roslaunch floribot_simulation FloriBot.launch 
+```
+# Fehlerbehebung
+Sollte es aufgrund von fehlenden Abhänigkeiten zu Fehlern kommen, können diese mit `rosdep` in der Regel behoben werden:
+```
+cd ~/catkin_ws 
+```
+```
+rosdep install --from-paths src --ignore-src -r -y
 ```
