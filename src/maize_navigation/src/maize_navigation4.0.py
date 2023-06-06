@@ -16,8 +16,9 @@ class FieldRobotNavigator:
         rospy.Subscriber('/merged_point_cloud', PointCloud2, self.point_cloud_callback)
         rospy.Subscriber('/merged_point_cloud', PointCloud2, self.point_cloud_callback)
         rospy.Subscriber('/merged_point_cloud', PointCloud2, self.point_cloud_callback)
-        rospy.Subscriber('/automatic_mode', Bool, self.navigate)
-        rospy.Subscriber('/movement_sequence', Joy, self.pattern_callback)
+        rospy.Subscriber('/teleop/automatic_mode', Bool, self.automatic_mode_callback)
+        rospy.Subscriber('/teleop/cmd_vel', Twist, self.teleop_cmd_vel_callback)
+        rospy.Subscriber('/teleop/movement_sequence', Joy, self.pattern_callback)
         self.cmd_vel_pub = rospy.Publisher('/cmd_vel', Twist, queue_size=1)
         self.points_pub = rospy.Publisher('/field_points', PointCloud2, queue_size=1)
 
@@ -42,12 +43,16 @@ class FieldRobotNavigator:
         self.vel_linear_drive =rospy.get_param('vel_linear_drive')
         self.vel_linear_count= rospy.get_param('vel_linear_count')
         self.vel_linear_turn =rospy.get_param('vel_linear_turn')
+
+        self.last_state = 'drive_in_row'
         
         # Initialize state variables
-        self.current_state = 'drive_in_row'
+        self.current_state = 'manual_mode'
         self.pattern =rospy.get_param('pattern')
+        self.automatic_mode=False
 
         self.driven_row = 0
+        
 
 
     def point_cloud_callback(self, msg):
@@ -90,8 +95,6 @@ class FieldRobotNavigator:
             if self.points is None:
                 rate.sleep()
                 continue
-            if self.automatic_mode==False:
-                rospy.spin()
             else:
                 if self.current_state == 'drive_in_row':
                     self.drive_in_row()
@@ -101,6 +104,8 @@ class FieldRobotNavigator:
                     self.counting_rows()
                 elif self.current_state == 'turn_to_row':
                     self.turn_to_row()
+                elif self.current_state == 'manual_mode':
+                    self.manual_mode()
                     
 
                 rate.sleep()
@@ -121,6 +126,23 @@ class FieldRobotNavigator:
             pattern.append([button_count, button_value])
             self.pattern = pattern
 
+    def automatic_mode_callback(self,msg):
+    # Callback function to process the received message
+        self.automatic_mode = msg.data
+
+    def teleop_cmd_vel_callback(self,msg):
+    # Callback function to process the received message
+        self.teleop_cmd_vel = Twist()
+        self.teleop_cmd_vel.linear.x = msg.linear.x
+        self.teleop_cmd_vel.angular.z = msg.angular.z
+
+    def manual_mode(self):
+        rospy.loginfo("Manual mode...")
+        cmd_vel = Twist()
+        cmd_vel = self.teleop_cmd_vel
+        self.cmd_vel_pub.publish(cmd_vel)
+        if self.automatic_mode==True:
+            self.current_state=self.last_state
 
     def drive_in_row(self):
         rospy.loginfo("Driving in row...")
@@ -158,7 +180,7 @@ class FieldRobotNavigator:
             rospy.loginfo("Distance to center: %f", center_dist)
          # Adjust the angular velocity to center the robot between the rows
             cmd_vel = Twist()
-            cmd_vel.angular.z = -center_dist*5*self.vel_linear_drive
+            cmd_vel.angular.z = -center_dist*3*self.vel_linear_drive
             if np.abs(center_dist)>0.15:
                 cmd_vel.linear.x = 0.1
                 if    np.abs(center_dist) > 0.20:
@@ -167,6 +189,10 @@ class FieldRobotNavigator:
                 cmd_vel.linear.x = self.vel_linear_drive*(self.max_dist_in_row-np.abs(center_dist))/self.max_dist_in_row
             rospy.loginfo("Publishing to cmd_vel: %s", cmd_vel)
         self.cmd_vel_pub.publish(cmd_vel)
+        if self.automatic_mode==False:
+            self.last_state=self.current_state
+            self.current_state='manual_mode'
+        
 
     def turn_and_exit(self):
         rospy.loginfo("Turn and exit...")
@@ -232,7 +258,9 @@ class FieldRobotNavigator:
             rospy.loginfo("Publishing to cmd_vel: %s", cmd_vel)
 
         self.cmd_vel_pub.publish(cmd_vel)
-
+        if self.automatic_mode==False:
+            self.last_state=self.current_state
+            self.current_state='manual_mode'
 
     def counting_rows(self):
         rospy.loginfo("counting rows...")
@@ -282,7 +310,9 @@ class FieldRobotNavigator:
             self.previous_row=self.actual_row     
             rospy.loginfo("Publishing to cmd_vel: %s", cmd_vel)
             self.cmd_vel_pub.publish(cmd_vel)
-
+            if self.automatic_mode==False:
+                self.last_state=self.current_state
+                self.current_state='manual_mode'
                 
 
 
@@ -322,6 +352,10 @@ class FieldRobotNavigator:
             rospy.loginfo("Publishing to cmd_vel: %s", cmd_vel)
 
         self.cmd_vel_pub.publish(cmd_vel)
+        if self.automatic_mode==False:
+            self.last_state=self.current_state
+            self.current_state='manual_mode'
+
 
 if __name__ == '__main__':
     navigator = FieldRobotNavigator()

@@ -28,17 +28,17 @@ both_sides: 'both'
 box: 'drive'
 
 pattern:
-  - [2, 'L']
   - [1, 'L']
   - [1, 'R']
-  - [3, 'R']
+  - [1, 'L']
+  - [1, 'R']
   - [1, 'L']
   - [1, 'R']
 critic_row: [3,5]
   
 vel_linear_turn: 0.25
 #0.25
-vel_linear_drive: 0.75
+vel_linear_drive: 0.4
 #0.75
 vel_linear_count: 0.25
 #0.25

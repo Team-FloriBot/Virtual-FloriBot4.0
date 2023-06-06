@@ -100,6 +100,7 @@ class FieldRobotNavigator:
                     image = Image.open(spray_left_path)
                 else:
                     image = Image.open(spray_not_path)
+                #image.close()    
                 image.show()
             # Update previous values
             prev_spray_left = spray_left
