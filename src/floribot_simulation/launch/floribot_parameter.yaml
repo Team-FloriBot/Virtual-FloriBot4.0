@@ -36,11 +36,11 @@ pattern:
   - [1, 'R']
 critic_row: [2,5]
   
-vel_linear_turn: 0.125
+vel_linear_turn: 0.25
 #0.25
-vel_linear_drive: 0.25
+vel_linear_drive: 0.7
 #0.75
-vel_linear_count: 0.125
+vel_linear_count: 0.25
 #0.25
 row_width: 0.75
 drive_out_dist: 0.6315
@@ -51,4 +51,10 @@ max_dist_in_row: 0.15
 #rosparam load /home/user/catkin_ws/src/floribot_simulation/launch/floribot_parameter.yaml 
 
 #rosparam eliminieren
-#pflanzenabstand als parameterw
+#pflanzenabstand als parameter
+#static tf auf base node 
+#use full sensorscan
+#other plants?
+#radar?
+#neighbour rows
+

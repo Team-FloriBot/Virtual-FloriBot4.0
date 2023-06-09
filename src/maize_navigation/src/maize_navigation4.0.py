@@ -294,7 +294,7 @@ class FieldRobotNavigator:
             cmd_vel = Twist()
             cmd_vel.linear.x = self.vel_linear_count
             rospy.loginfo("No. of points in Box %i", len(self.points))
-            if  len(self.points)>0:
+            if  len(self.points)>1:
                  # Compute the shortest y distance
                 cmd_vel.angular.z = gain*(self.min_dist - self.actual_dist)
                 rospy.loginfo("Gap to desired distance:%f",self.min_dist - self.actual_dist)
