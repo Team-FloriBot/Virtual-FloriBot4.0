@@ -24,7 +24,7 @@ class FieldRobotNavigator:
 
         # Initialize parameters
         self.x_min_front = -0.1#rospy.get_param('x_min_drive_in_row')
-        self.x_max_front = 0.3#rospy.get_param('x_max_drive_in_row')
+        self.x_max_front = 0.25#rospy.get_param('x_max_drive_in_row')
         self.y_min_front = 0.1#rospy.get_param('y_min_drive_in_row')
         self.y_max_front = 0.75#rospy.get_param('y_max_drive_in_row')
 

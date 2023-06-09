@@ -14,8 +14,6 @@ class FieldRobotNavigator:
 
         # Set up subscribers and publishers
         rospy.Subscriber('/merged_point_cloud', PointCloud2, self.point_cloud_callback)
-        rospy.Subscriber('/merged_point_cloud', PointCloud2, self.point_cloud_callback)
-        rospy.Subscriber('/merged_point_cloud', PointCloud2, self.point_cloud_callback)
         rospy.Subscriber('/teleop/automatic_mode', Bool, self.automatic_mode_callback)
         rospy.Subscriber('/teleop/cmd_vel', Twist, self.teleop_cmd_vel_callback)
         rospy.Subscriber('/teleop/movement_sequence', Joy, self.pattern_callback)
@@ -48,8 +46,11 @@ class FieldRobotNavigator:
         
         # Initialize state variables
         self.current_state = 'manual_mode'
-        self.pattern =rospy.get_param('pattern')
+        self.pattern = rospy.get_param('pattern')
         self.automatic_mode=False
+        self.teleop_cmd_vel=Twist()
+        self.teleop_cmd_vel.linear.x = 0
+        self.teleop_cmd_vel.angular.z = 0
 
         self.driven_row = 0
         
@@ -132,7 +133,6 @@ class FieldRobotNavigator:
 
     def teleop_cmd_vel_callback(self,msg):
     # Callback function to process the received message
-        self.teleop_cmd_vel = Twist()
         self.teleop_cmd_vel.linear.x = msg.linear.x
         self.teleop_cmd_vel.angular.z = msg.angular.z
 

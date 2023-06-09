@@ -267,7 +267,7 @@ class FieldRobotNavigator:
         points_y = [p.y for p in self.points]
         y_mean = np.mean((points_y)) if len(points_y) > 0 else np.inf #left is negative usually
         rospy.loginfo("ymean: %f", y_mean)
-        if -0.1 < y_mean < 0.1:
+        if -0.25 < y_mean < 0.25:
             cmd_vel = Twist()
             rospy.loginfo("Start driving in row...")
             self.x_min = rospy.get_param('x_min_drive_in_row')
