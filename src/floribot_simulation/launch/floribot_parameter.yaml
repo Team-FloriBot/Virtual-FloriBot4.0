@@ -38,19 +38,11 @@ pattern:
   - [1, 'R']
 critic_row: [2,5]
   
-<<<<<<< HEAD
-vel_linear_turn: 0.2
-#0.25
-vel_linear_drive: 0.4
-#0.75
-vel_linear_count: 0.2
-=======
 vel_linear_turn: 0.25
 #0.25
 vel_linear_drive: 0.7
 #0.75
 vel_linear_count: 0.25
->>>>>>> aef72c8c6dfb5f7b8edf805ed79380ffb0bc8d50
 #0.25
 row_width: 0.75
 drive_out_dist: 0.5315
