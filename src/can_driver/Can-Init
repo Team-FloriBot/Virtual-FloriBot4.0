@@ -1,0 +1,16 @@
+#!/bin/bash
+
+<< 'Comment'
+    Laden des Can-Treibers und Erstellen eines Can-Interface
+    mit anschließender Online-Stellung
+Comment
+
+# Superuser Abfrage
+[ "$UID" -eq 0 ] || exec sudo bash "$0" "$@"
+# Kernel Modul laden
+modprobe can
+# Erstellen des Can-Interface
+ip link set down can0
+ip link set can0 type can bitrate 250000
+# Interface Online stellen
+ip link set up can0

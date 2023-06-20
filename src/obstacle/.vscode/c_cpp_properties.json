@@ -1,0 +1,25 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "${default}",
+        "limitSymbolsToIncludedHeaders": false
+      },
+      "includePath": [
+        "/home/user/catkin_ws/devel/include/**",
+        "/opt/ros/noetic/include/**",
+        "/home/user/catkin_ws/src/base/include/**",
+        "/home/user/catkin_ws/src/realsense2_camera/include/**",
+        "/home/user/catkin_ws/src/realsense_gazebo_plugin/include/**",
+        "/home/user/catkin_ws/src/sick_scan/include/**",
+        "/usr/include/**"
+      ],
+      "name": "ROS",
+      "intelliSenseMode": "gcc-x64",
+      "compilerPath": "/usr/bin/gcc",
+      "cStandard": "gnu11",
+      "cppStandard": "c++14"
+    }
+  ],
+  "version": 4
+}

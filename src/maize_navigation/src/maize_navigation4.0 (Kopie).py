@@ -15,7 +15,6 @@ class FieldRobotNavigator:
         # Set up subscribers and publishers
         rospy.Subscriber('/merged_point_cloud', PointCloud2, self.point_cloud_callback)
         rospy.Subscriber('/teleop/automatic_mode', Bool, self.automatic_mode_callback)
-        rospy.Subscriber('/obstacle/obstacle_automatic_mode', Bool, self.obstacle_automatic_mode_callback)
         rospy.Subscriber('/teleop/cmd_vel', Twist, self.teleop_cmd_vel_callback)
         rospy.Subscriber('/teleop/movement_sequence', Joy, self.pattern_callback)
         self.cmd_vel_pub = rospy.Publisher('/cmd_vel', Twist, queue_size=1)
@@ -49,7 +48,6 @@ class FieldRobotNavigator:
         self.current_state = 'manual_mode'
         self.pattern = rospy.get_param('pattern')
         self.automatic_mode=False
-        self.obstacle_automatic_mode= True
         self.teleop_cmd_vel=Twist()
         self.teleop_cmd_vel.linear.x = 0
         self.teleop_cmd_vel.angular.z = 0
@@ -132,9 +130,6 @@ class FieldRobotNavigator:
     def automatic_mode_callback(self,msg):
     # Callback function to process the received message
         self.automatic_mode = msg.data
-    
-    def obstacle_automatic_mode_callback(self,msg):
-        self.obstacle_automatic_mode = msg.data
 
     def teleop_cmd_vel_callback(self,msg):
     # Callback function to process the received message
@@ -146,7 +141,7 @@ class FieldRobotNavigator:
         cmd_vel = Twist()
         cmd_vel = self.teleop_cmd_vel
         self.cmd_vel_pub.publish(cmd_vel)
-        if self.automatic_mode==True and self.obstacle_automatic_mode==True:
+        if self.automatic_mode==True:
             self.current_state='drive_in_row'#self.last_state
 
     def drive_in_row(self):
@@ -158,7 +153,7 @@ class FieldRobotNavigator:
         right_y = [p.y for p in self.points if p.y >= 0]
         left_dist = np.mean(np.abs(left_y)) if len(left_y) > 1 else np.inf #left is negative usually
         right_dist = np.mean(np.abs(right_y)) if len(right_y) > 1 else np.inf
-        if np.isinf(left_dist) and np.isinf(right_dist):
+        if np.isinf(left_dist) or np.isinf(right_dist):
             # Not enough data to calculate center
             rospy.loginfo("At least one side has no maize")
             rospy.loginfo("Reached the end of a row.")
@@ -180,11 +175,6 @@ class FieldRobotNavigator:
             self.driven_row += 1 
             self.current_state = 'turn_and_exit'
         else:
-            if np.isinf(left_dist):
-                left_dist=self.row_width-right_dist
-            if np.isinf(right_dist):
-                right_dist=self.row_width-left_dist
-                
             # Calculate the actual distance to the center of both sides
             center_dist = (right_dist - left_dist) / 2.0
             rospy.loginfo("Distance to center: %f", center_dist)
@@ -200,7 +190,7 @@ class FieldRobotNavigator:
                 cmd_vel.linear.x = self.vel_linear_drive*(self.max_dist_in_row-np.abs(center_dist))/self.max_dist_in_row
             rospy.loginfo("Publishing to cmd_vel: %s", cmd_vel)
         self.cmd_vel_pub.publish(cmd_vel)
-        if self.automatic_mode==False or self.obstacle_automatic_mode==False:
+        if self.automatic_mode==False:
             self.last_state=self.current_state
             self.current_state='manual_mode'
         
@@ -269,7 +259,7 @@ class FieldRobotNavigator:
             rospy.loginfo("Publishing to cmd_vel: %s", cmd_vel)
 
         self.cmd_vel_pub.publish(cmd_vel)
-        if self.automatic_mode==False or self.obstacle_automatic_mode==False:
+        if self.automatic_mode==False:
             self.last_state=self.current_state
             self.current_state='manual_mode'
 
@@ -321,7 +311,7 @@ class FieldRobotNavigator:
             self.previous_row=self.actual_row     
             rospy.loginfo("Publishing to cmd_vel: %s", cmd_vel)
             self.cmd_vel_pub.publish(cmd_vel)
-            if self.automatic_mode==False or self.obstacle_automatic_mode==False:
+            if self.automatic_mode==False:
                 self.last_state=self.current_state
                 self.current_state='manual_mode'
                 
@@ -363,7 +353,7 @@ class FieldRobotNavigator:
             rospy.loginfo("Publishing to cmd_vel: %s", cmd_vel)
 
         self.cmd_vel_pub.publish(cmd_vel)
-        if self.automatic_mode==False or self.obstacle_automatic_mode==False:
+        if self.automatic_mode==False:
             self.last_state=self.current_state
             self.current_state='manual_mode'
 

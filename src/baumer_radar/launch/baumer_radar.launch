@@ -1,0 +1,26 @@
+<launch>
+  <!-- Launch sockatcan_bridge node -->
+  <node pkg="socketcan_bridge" type="socketcan_bridge_node" name="socketcan_bridge_node" output="screen">
+    <!-- Add any required arguments for the sockatcan_bridge node -->
+    <!-- For example:
+    <param name="interface" value="can0" />
+    -->
+  </node>
+
+  <!-- Launch can_driver node -->
+  <node pkg="can_driver" type="decode_data.py" name="decode_data_node" output="screen">
+    <!-- Add any required arguments for the decode_driver node -->
+    <!-- For example:
+    <param name="param_name" value="param_value" />
+    -->
+  </node>
+  
+  <!-- Launch filtered_data node -->
+  <node pkg="baumer_radar" type="filtered_data.py" name="filtered_data_node" output="screen">
+    <!-- Add any required arguments for the decode_driver node -->
+    <!-- For example:
+    <param name="param_name" value="param_value" />
+    -->
+  </node>
+</launch>
+
