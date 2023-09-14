@@ -1,5 +1,3 @@
 <launch>
-    <node pkg = "base2gazebo" name = "base2gazebo" type = "PublishWheelSpeed.py" />
-    <node pkg = "base2gazebo" name = "bodyAnglePublisher" type ="tf_listener.py" />
-    
+    <node pkg = "base2gazebo" name = "base2gazebo" type = "PublishWheelSpeed.py" />    
 </launch>

@@ -1,5 +1,5 @@
 import rospy
-from base2gazebo.msg import Wheels
+from base.msg import Wheels
 from std_msgs.msg import Float64
 
 def callback(data):

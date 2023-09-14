@@ -66,7 +66,7 @@
       <!-- Include Robot Spawner ##### Muss hinter Controller Spawner stehen ########-->
   <include file="$(find virtual_maize_field)/launch/robot_spawner.launch">
     <arg name="robot_name" value="floribot"/>
-    <arg name="initial_joint_pose" value="-J j_revolute_front_rear -1.57" />
+    <arg name="initial_joint_pose" value="-J j_revolute_front_rear 0.00" />
   </include>
   
 </launch>
