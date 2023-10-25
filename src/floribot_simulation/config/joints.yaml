@@ -6,39 +6,39 @@ gazebo:
 
    joint_fl_controller:
       type: velocity_controllers/JointVelocityController
-      joint: joint_frontLeft
+      joint: axleFront_link_2_wheelFrontLeft_link
       pid: {p: 5.0, i: 0, d: 0}
    
    joint_fr_controller:
       type: velocity_controllers/JointVelocityController
-      joint: joint_frontRight
+      joint: axleFront_link_2_wheelFrontRight_link
       pid: {p: 5.0, i: 0, d: 0}
    
    joint_rl_controller:
       type: velocity_controllers/JointVelocityController
-      joint: joint_rearLeft
+      joint: axleRear_link_2_wheelRearLeft_link
       pid: {p: 5.0, i: 0, d: 0}
    
    joint_rr_controller:
       type: velocity_controllers/JointVelocityController
-      joint: joint_rearRight
+      joint: axleRear_link_2_wheelRearRight_link
       pid: {p: 5.0, i: 0, d: 0}
 
    body_angle_controller:
       type: velocity_controllers/JointVelocityController
-      joint: body_angle
+      joint: jointFront_link_2_jointRear_link
       pid: {p: 5.0, i: 0, d: 0}
 
    swing_angle_controller:
       type: velocity_controllers/JointVelocityController
-      joint: j_revolute_front_rear
+      joint: axleFront_link_2_jointFront_link
       pid: {p: 5.0, i: 0, d: 0}
    
 gazebo_ros_control:
    pid_gains:
-      joint_frontLeft: {p: 5.0, i: 0, d: 0}
-      joint_frontRight: {p: 5.0, i: 0, d: 0}
-      joint_rearLeft: {p: 5.0, i: 0, d: 0}
-      joint_rearRight: {p: 5.0, i: 0, d: 0}
-      body_angle: {p: 5.0, i: 0, d: 0}
-      j_revolute_front_rear: {p: 5.0, i: 0, d: 0}
+      axleFront_link_2_wheelFrontLeft_link: {p: 10.0, i: 1, d: 0}
+      axleFront_link_2_wheelFrontRight_link: {p: 10.0, i: 1, d: 0}
+      axleRear_link_2_wheelRearLeft_link: {p: 10.0, i: 1, d: 0}
+      axleRear_link_2_wheelRearRight_link: {p: 10.0, i: 1, d: 0}
+      jointFront_link_2_jointRear_link: {p: 1.0, i: 0, d: 0}
+      axleFront_link_2_jointFront_link: {p: 1.0, i: 0, d: 0}

@@ -7,7 +7,7 @@
   <arg name="gui" default="true"/>
   <arg name="headless" default="false"/>
   <arg name="debug" default="false"/>
-  <arg name="model" default="$(find floribot_simulation)/urdf/Floribot_reduced.urdf.xacro"/>
+  <arg name="model" default="$(find floribot_simulation)/urdf/Floribot_radical-reduced.urdf.xacro"/>
   <!--arg name="model" default="$(find floribot_simulation)/urdf/Floribot_reduced_with_cam.urdf.xacro"/-->
   <arg name="rvizconfig" default="$(find floribot_simulation)/rviz/urdf.rviz" />
   <arg name="world_path" default="$(find virtual_maize_field)/worlds/"/>
@@ -20,7 +20,7 @@
     <arg name="paused" value="$(arg paused)"/>
     <arg name="use_sim_time" value="$(arg use_sim_time)"/>
     <arg name="headless" value="$(arg headless)"/>
-    <arg name="world_name" value="$(arg world_path)$(arg world_name)" />
+    <!--arg name="world_name" value="$(arg world_path)$(arg world_name)" /-->
   </include>
   
   <!-- Include Laserscanners -->
@@ -66,7 +66,7 @@
       <!-- Include Robot Spawner ##### Muss hinter Controller Spawner stehen ########-->
   <include file="$(find virtual_maize_field)/launch/robot_spawner.launch">
     <arg name="robot_name" value="floribot"/>
-    <arg name="initial_joint_pose" value="-J j_revolute_front_rear 0.00" />
+    <arg name="initial_joint_pose" value="-J jointFront_link_2_jointRear_link 0.00" />
   </include>
   
 </launch>

@@ -1,0 +1,433 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="Floribot">
+
+<!-- wagon parameter -->
+<xacro:property name="height_wagon" value="0.363" />
+<xacro:property name="width_wagon" value="0.215" />
+<xacro:property name="length_wagon_visual_front" value="0.635" />
+<xacro:property name="length_wagon_visual_rear" value="0.605" />
+<xacro:property name="length_wagon_collition" value="0.52" />
+
+<!-- wheel parameter -->
+<xacro:property name="wheel_radius" value="0.14" />
+<xacro:property name="wheel_thickness" value="0.08" />
+<xacro:property name="x_joint_wheel_front" value="0" />
+<xacro:property name="y_joint_wheel_front" value="0.167" />
+<xacro:property name="x_joint_wheel_back" value="0" />
+<xacro:property name="y_joint_wheel_back" value="0.167" />
+
+<!-- articulated joint parameter -->
+<xacro:property name="radius" value="0.001" />
+<xacro:property name="vertical_length" value="0.01" />
+<xacro:property name="horizontal_length" value="0.01" />
+<xacro:property name="wheelBase" value="0.775" />
+
+
+<!---->
+<!-- links -->
+<!---->
+
+<link name="base_link">
+</link>
+
+<link name="axleFront_link">
+</link>
+
+<link name="wheelFrontLeft_link">
+  <!--visual>
+    <origin xyz="0 -${wheel_thickness/2} 0" rpy="1.57 0 0"/>
+    <axis xyz="0 0 0"/>
+    <geometry>
+      <mesh filename="package://floribot_simulation/meshes/Reifen.stl" scale="0.001 0.001 0.001" />
+    </geometry>
+    <material name="r">
+      <color rgba="0.9 0 0 1.0"/>
+    </material>
+  </visual-->
+
+  <visual>
+    <origin xyz="0 0 0" rpy="1.57 0 0"/>
+    <geometry>
+      <cylinder length="${wheel_thickness}" radius="${wheel_radius}"/>
+    </geometry>
+  </visual>
+
+  <collision>
+    <origin xyz="0 0 0" rpy="1.57 0 0"/>
+    <geometry>
+      <cylinder length="${wheel_thickness}" radius="${wheel_radius}"/>
+    </geometry>
+  </collision>
+
+  <inertial>
+    <mass value="2.4"/>
+    <inertia ixx="0.014" ixy="0.0" ixz="0.0" iyy="0.026" iyz="0.0" izz="0.014"/>
+  </inertial>
+</link>
+
+<link name="wheelFrontRight_link">
+  <!--visual>
+    <origin xyz="0 -${wheel_thickness/2} 0" rpy="1.57 0 0"/>
+    <axis xyz="0 0 0"/>
+    <geometry>
+      <mesh filename="package://floribot_simulation/meshes/Reifen.stl" scale="0.001 0.001 0.001" />
+    </geometry>
+    <material name="r">
+      <color rgba="0.9 0 0 1.0"/>
+    </material>
+  </visual-->
+
+  <visual>
+    <origin xyz="0 0 0" rpy="1.57 0 0"/>
+    <geometry>
+      <cylinder length="${wheel_thickness}" radius="${wheel_radius}"/>
+    </geometry>
+  </visual>
+
+  <collision>
+    <origin xyz="0 0 0" rpy="1.57 0 0"/>
+    <geometry>
+      <cylinder length="${wheel_thickness}" radius="${wheel_radius}"/>
+    </geometry>
+  </collision>
+
+  <inertial>
+    <mass value="2.4"/>
+    <inertia ixx="0.014" ixy="0.0" ixz="0.0" iyy="0.026" iyz="0.0" izz="0.014"/>
+    </inertial>
+</link>
+
+<link name="frontWagon_link">
+  <!--visual>
+    <origin xyz="-${length_wagon_visual_front/2} 0 -${wheel_radius}" rpy="0 0 0"/>
+    <axis xyz="0 0 0"/>
+    <geometry>
+      <mesh filename="package://floribot_simulation/meshes/Vorderwagen.stl" scale="0.001 0.001 0.001" />
+    </geometry>
+    <material name="c">
+      <color rgba="0 0.9 0.9 1.0"/>
+    </material>
+  </visual-->
+
+  <visual>
+    <origin xyz="0 0 ${wheel_radius}" rpy="0 0 0"/>
+    <geometry>
+      <box size="${length_wagon_collition} ${width_wagon} ${height_wagon}"/>
+    </geometry>
+  </visual>
+
+  <collision>
+    <origin xyz="0 0 ${wheel_radius}" rpy="0 0 0"/>
+    <geometry>
+      <box size="${length_wagon_collition} ${width_wagon} ${height_wagon}"/>
+    </geometry>
+  </collision>
+
+  <inertial>
+    <origin xyz="0 0 ${wheel_radius}" rpy="0 0 0"/>
+    <mass value="31"/>
+    <inertia ixx="0.3853" ixy="0.0001197" ixz="-0.0128" iyy="1.0" iyz="0.0000149" izz="0.8678"/>
+  </inertial>
+</link>
+
+<link name="jointFront_link">
+  <!--visual>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <axis xyz="0 0 0"/>
+    <geometry>
+      <cylinder length="${vertical_length}" radius="${radius}"/>
+    </geometry>
+    <material name="r">
+      <color rgba="0.9 0 0 1.0"/>
+    </material>
+  </visual-->
+
+  <visual>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <geometry>
+      <cylinder length="${vertical_length}" radius="${radius}"/>
+    </geometry>
+  </visual>
+
+  <collision>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <geometry>
+      <cylinder length="${vertical_length}" radius="${radius}"/>
+    </geometry>
+  </collision>
+
+  <inertial>
+    <mass value="0.01"/>
+    <inertia ixx="0.000001" ixy="0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="0.000001"/>
+  </inertial>
+</link>
+
+<link name="jointRear_link">
+  <!---visual>
+    <origin xyz="0 0 0" rpy="0 1.57 0"/>
+    <axis xyz="0 0 0.0"/>
+    <geometry>
+      <cylinder length="${horizontal_length}" radius="${radius}"/>
+    </geometry>
+    <material name="r">
+      <color rgba="0.9 0 0 1.0"/>
+    </material>
+  </visual-->
+
+  <visual>
+    <origin xyz="0 0 0" rpy="0 1.57 0"/>
+    <geometry>
+      <cylinder length="${horizontal_length}" radius="${radius}"/>
+    </geometry>
+  </visual>
+
+  <collision>
+    <origin xyz="0 0 0" rpy="0 1.57 0"/>
+    <geometry>
+      <cylinder length="${horizontal_length}" radius="${radius}"/>
+    </geometry>
+  </collision>
+
+  <inertial>
+    <mass value="0.01"/>
+    <inertia ixx="0.000001" ixy="0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="0.000001"/>
+  </inertial>
+</link>
+
+<link name="axleRear_link">
+</link>
+
+<link name="wheelRearLeft_link">
+  <!--visual>
+    <origin xyz="0 -${wheel_thickness/2}  0" rpy="1.57 0 0"/>
+    <axis xyz="0 0 0"/>
+    <geometry>
+      <mesh filename="package://floribot_simulation/meshes/Reifen.stl" scale="0.001 0.001 0.001" />
+    </geometry>
+    <material name="r">
+      <color rgba="0.9 0 0 1.0"/>
+    </material>
+  </visual-->
+
+  <visual>
+    <origin xyz="0 0 0" rpy="1.57 0 0"/>
+    <geometry>
+      <cylinder length="${wheel_thickness}" radius="${wheel_radius}"/>
+    </geometry>
+  </visual>
+
+  <collision>
+    <origin xyz="0 0 0" rpy="1.57 0 0"/>
+    <geometry>
+      <cylinder length="${wheel_thickness}" radius="${wheel_radius}"/>
+    </geometry>
+  </collision>
+
+  <inertial>
+    <mass value="2.4"/>
+    <inertia ixx="0.014" ixy="0.0" ixz="0.0" iyy="0.026" iyz="0.0" izz="0.014"/>
+  </inertial>
+</link>
+
+<link name="wheelRearRight_link">
+  <!--visual>
+    <origin xyz="0 -${wheel_thickness/2} 0" rpy="1.57 0 0"/>
+    <axis xyz="0 0 0"/>
+    <geometry>
+      <mesh filename="package://floribot_simulation/meshes/Reifen.stl" scale="0.001 0.001 0.001" />
+    </geometry>
+    <material name="r">
+      <color rgba="0.9 0 0 1.0"/>
+    </material>
+  </visual-->
+
+  <visual>
+    <origin xyz="0 0 0" rpy="1.57 0 0"/>
+    <geometry>
+      <cylinder length="${wheel_thickness}" radius="${wheel_radius}"/>
+    </geometry>
+  </visual>
+
+  <collision>
+    <origin xyz="0 0 0" rpy="1.57 0 0"/>
+    <geometry>
+      <cylinder length="${wheel_thickness}" radius="${wheel_radius}"/>
+    </geometry>
+  </collision>
+
+  <inertial>
+    <mass value="2.4"/>
+    <inertia ixx="0.014" ixy="0.0" ixz="0.0" iyy="0.026" iyz="0.0" izz="0.014"/>
+  </inertial>
+</link>
+
+<link name="rearWagon_link">
+  <!--visual>
+    <origin xyz="${length_wagon_visual_rear/2} 0 -${wheel_radius}" rpy="0 0 0"/>
+    <axis xyz="0 0 0"/>
+    <geometry>
+      <mesh filename="package://floribot_simulation/meshes/Hinterwagen.stl" scale="0.001 0.001 0.001" />
+    </geometry>
+    <material name="b">
+      <color rgba="0 0 0.9 1.0"/>
+    </material>
+  </visual-->
+
+  <visual>
+    <origin xyz="0 0 ${wheel_radius}" rpy="0 0 0"/>
+    <geometry>
+      <box size="${length_wagon_collition} ${width_wagon} ${height_wagon}"/>
+    </geometry>
+  </visual>
+
+  <collision>
+    <origin xyz="0 0 ${wheel_radius}" rpy="0 0 0"/>
+    <geometry>
+      <box size="${length_wagon_collition} ${width_wagon} ${height_wagon}"/>
+    </geometry>
+  </collision>
+
+  <inertial>
+    <origin xyz="0 0 ${wheel_radius}" rpy="0 0 0"/>
+    <mass value="33"/>
+    <inertia ixx="0.4137" ixy="0.00027" ixz="0.007359" iyy="1.047" iyz="0.0001775" izz="0.9021"/>
+    </inertial>
+</link>
+
+
+<!---->
+<!-- joints -->
+<!---->
+
+<joint name="base_link_2_axleFront_link" type="fixed">
+  <parent link="base_link"/>
+  <child link="axleFront_link"/>
+  <origin xyz="0 0 0"/>
+</joint>
+
+<joint name="axleFront_link_2_wheelFrontLeft_link" type="continuous">
+  <parent link="axleFront_link"/>
+  <child link="wheelFrontLeft_link"/>
+  <axis xyz="0 1 0"/>
+  <origin xyz="${x_joint_wheel_front} ${y_joint_wheel_front} 0"/>
+  <limit effort="100.0" velocity="14.2857" />
+</joint>
+
+<joint name="axleFront_link_2_wheelFrontRight_link" type="continuous">
+  <parent link="axleFront_link"/>
+  <child link="wheelFrontRight_link"/>
+  <axis xyz="0 1 0"/>
+  <origin xyz="${x_joint_wheel_front} -${y_joint_wheel_front} 0"/>
+  <limit effort="100.0" velocity="14.2857" />
+</joint>
+
+<joint name="axleFront_link_2_frontWagon_link" type="fixed">
+  <parent link="axleFront_link"/>
+  <child link="frontWagon_link"/>
+  <origin xyz="0 0 0"/>
+</joint>
+
+<joint name="axleFront_link_2_jointFront_link" type="revolute">
+    <axis xyz="1 0 0"/>
+    <limit effort="1.0" lower="-1.57" upper="1.57" velocity="0.5"/>
+    <parent link="axleFront_link"/>
+    <child link="jointFront_link"/>
+    <origin xyz="${-wheelBase/2} 0 0"/>
+</joint>
+
+<joint name="jointFront_link_2_jointRear_link" type="revolute">
+  <axis xyz="0 0 1"/>
+  <limit effort="1.0" lower="-1.57" upper="1.57" velocity="0.5"/>-
+  <parent link="jointFront_link"/>
+  <child link="jointRear_link"/>
+  <origin xyz="0 0 0"/>
+</joint>
+
+<joint name="jointRear_link_2_axleRear_link" type="fixed">
+  <parent link="jointRear_link"/>
+  <child link="axleRear_link"/>
+  <origin xyz="${-wheelBase/2} 0 0"/>
+</joint>
+
+<joint name="axleRear_link_2_wheelRearLeft_link" type="continuous">
+  <parent link="axleRear_link"/>
+  <child link="wheelRearLeft_link"/>
+  <axis xyz="0 1 0"/>
+  <origin xyz="${x_joint_wheel_back} ${y_joint_wheel_back} 0"/>
+  <limit effort="100.0" velocity="14.2857" />
+</joint>
+
+<joint name="axleRear_link_2_wheelRearRight_link" type="continuous">
+  <parent link="axleRear_link"/>
+  <child link="wheelRearRight_link"/>
+  <axis xyz="0 1 0"/>
+  <origin xyz="${x_joint_wheel_back} -${y_joint_wheel_back} 0"/>
+  <limit effort="100.0" velocity="14.2857" />
+</joint>
+
+<joint name="axleRear_link_2_rearWagon_link" type="fixed">
+  <parent link="axleRear_link"/>
+  <child link="rearWagon_link"/>
+  <origin xyz="0 0 0"/>
+</joint>
+
+
+
+<!-- transmissions are required to present these joints in the ros topic joint_states -->
+
+<transmission name="body_angle_trans">
+  <type>transmission_interface/SimpleTransmission</type>
+  <joint name="jointFront_link_2_jointRear_link">
+    <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+  </joint>
+  <actuator name="body_angle_motor">
+    <mechanicalReduction>1</mechanicalReduction>
+  </actuator>
+</transmission>
+
+<transmission name="swaing_angle_trans">
+  <type>transmission_interface/SimpleTransmission</type>
+  <joint name="axleFront_link_2_jointFront_link">
+    <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+  </joint>
+  <actuator name="swing_angle_motor">
+    <mechanicalReduction>1</mechanicalReduction>
+  </actuator>
+</transmission>
+
+<!-- macro wheel tranmission -->
+<xacro:macro name="wheel_transmission" params="position">
+  <transmission name="${position}_trans">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="${position}">
+      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </joint>
+    <actuator name="${position}_motor">
+    </actuator>
+  </transmission>  
+  <gazebo reference="${position}">
+    <mu1 value="0.5"/>
+    <mu2 value="0.5"/>
+    <kp value="10000000.0" />
+    <kd value="1.0" />
+    <fdir1 value="1 0 0"/>
+  </gazebo> 
+</xacro:macro>
+
+<xacro:wheel_transmission position="axleFront_link_2_wheelFrontLeft_link" />
+
+<xacro:wheel_transmission position="axleFront_link_2_wheelFrontRight_link" />
+
+<xacro:wheel_transmission position="axleRear_link_2_wheelRearLeft_link" />
+
+<xacro:wheel_transmission position="axleRear_link_2_wheelRearRight_link" />
+
+
+<!-- Gazebo plugin for ROS Control -->
+<gazebo>
+  <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+  </plugin>
+</gazebo>
+
+</robot>
